@@ -48,14 +48,23 @@ import com.smartdevicelink.proxy.rpc.AddCommandResponse;
 import com.smartdevicelink.proxy.rpc.AlertManeuverResponse;
 import com.smartdevicelink.proxy.rpc.ButtonPressResponse;
 import com.smartdevicelink.proxy.rpc.DialNumberResponse;
+import com.smartdevicelink.proxy.rpc.GetAppServiceDataResponse;
+import com.smartdevicelink.proxy.rpc.GetCloudAppPropertiesResponse;
+import com.smartdevicelink.proxy.rpc.GetFileResponse;
 import com.smartdevicelink.proxy.rpc.GetInteriorVehicleDataResponse;
 import com.smartdevicelink.proxy.rpc.GetSystemCapabilityResponse;
 import com.smartdevicelink.proxy.rpc.GetWayPointsResponse;
+import com.smartdevicelink.proxy.rpc.OnAppServiceData;
 import com.smartdevicelink.proxy.rpc.OnInteriorVehicleData;
+import com.smartdevicelink.proxy.rpc.OnRCStatus;
 import com.smartdevicelink.proxy.rpc.OnStreamRPC;
+import com.smartdevicelink.proxy.rpc.OnSystemCapabilityUpdated;
 import com.smartdevicelink.proxy.rpc.OnWayPointChange;
+import com.smartdevicelink.proxy.rpc.PerformAppServiceInteractionResponse;
+import com.smartdevicelink.proxy.rpc.PublishAppServiceResponse;
 import com.smartdevicelink.proxy.rpc.SendHapticDataResponse;
 import com.smartdevicelink.proxy.rpc.SendLocationResponse;
+import com.smartdevicelink.proxy.rpc.SetCloudAppPropertiesResponse;
 import com.smartdevicelink.proxy.rpc.SetInteriorVehicleDataResponse;
 import com.smartdevicelink.proxy.rpc.ShowConstantTbtResponse;
 import com.smartdevicelink.proxy.rpc.StreamRPCResponse;
@@ -148,6 +157,7 @@ import com.smartdevicelink.proxy.rpc.enums.TextFieldName;
 import com.smartdevicelink.transport.BTTransportConfig;
 import com.smartdevicelink.transport.BaseTransportConfig;
 import com.smartdevicelink.transport.MultiplexTransportConfig;
+import com.smartdevicelink.transport.TCPTransportConfig;
 import com.smartdevicelink.transport.TransportConstants;
 
 
@@ -805,10 +815,34 @@ public class SmartDeviceLinkService extends Service implements IProxyListenerALM
 		mHandler.postDelayed(mStopServiceRunnable, STOP_SERVICE_DELAY);
 	}
 
+
+//	public void startProxy() {
+//		if (proxy == null) {
+//			try {
+//				//proxy = new SyncProxyALM(this, "MobileWeather", true, "330533107");
+//				BaseTransportConfig transport = new BTTransportConfig();
+//				//BaseTransportConfig transport = new TCPTransportConfig(12345, "10.0.0.2", false);
+//				proxy = new SyncProxyALM(this, "MobileWeather", false, mDesiredAppSyncLanguage, mDesiredAppHmiLanguage, "330533107", transport);
+//				mRegisteredAppSyncLanguage = mDesiredAppSyncLanguage;
+//				mRegisteredAppHmiLanguage = mDesiredAppHmiLanguage;
+//			} catch (SyncException e) {
+//				e.printStackTrace();
+//				// error creating proxy, returned proxy = null
+//				if (proxy == null) {
+//					stopSelf();
+//				}
+//			}
+//		}
+//	}
+
 	public void startProxy(boolean forceConnect) {
 		if (proxy == null) {
 			try {
-				BaseTransportConfig transport= new MultiplexTransportConfig(getBaseContext(), APP_ID, MultiplexTransportConfig.FLAG_MULTI_SECURITY_OFF);
+//				BaseTransportConfig transport= new MultiplexTransportConfig(getBaseContext(), APP_ID, MultiplexTransportConfig.FLAG_MULTI_SECURITY_OFF);
+
+				BaseTransportConfig transport = new TCPTransportConfig(12345, "10.0.0.2", false);
+
+
 				proxy = new SdlProxyALM(this, "MobileWeather", false, mDesiredAppSdlLanguage, mDesiredAppHmiLanguage, APP_ID, transport);
 				mRegisteredAppSdlLanguage = mDesiredAppSdlLanguage;
 				mRegisteredAppHmiLanguage = mDesiredAppHmiLanguage;				
@@ -3457,6 +3491,51 @@ public class SmartDeviceLinkService extends Service implements IProxyListenerALM
 
 	@Override
 	public void onSendHapticDataResponse(SendHapticDataResponse response) {
+
+	}
+
+	@Override
+	public void onOnRCStatus(OnRCStatus notification) {
+
+	}
+
+	@Override
+	public void onSetCloudAppProperties(SetCloudAppPropertiesResponse response) {
+
+	}
+
+	@Override
+	public void onGetCloudAppProperties(GetCloudAppPropertiesResponse response) {
+
+	}
+
+	@Override
+	public void onPublishAppServiceResponse(PublishAppServiceResponse response) {
+
+	}
+
+	@Override
+	public void onGetAppServiceDataResponse(GetAppServiceDataResponse response) {
+
+	}
+
+	@Override
+	public void onGetFileResponse(GetFileResponse response) {
+
+	}
+
+	@Override
+	public void onPerformAppServiceInteractionResponse(PerformAppServiceInteractionResponse response) {
+
+	}
+
+	@Override
+	public void onOnAppServiceData(OnAppServiceData notification) {
+
+	}
+
+	@Override
+	public void onOnSystemCapabilityUpdated(OnSystemCapabilityUpdated notification) {
 
 	}
 
